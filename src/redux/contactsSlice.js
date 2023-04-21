@@ -2,7 +2,7 @@ import {
   createSlice,
   //  nanoid
 } from '@reduxjs/toolkit';
-import { fetchContacts, addContacts } from './operations';
+import { fetchContacts, addContacts, deleteContacts } from './operations';
 
 const contactsSlice = createSlice({
   name: 'contacts',
@@ -33,27 +33,23 @@ const contactsSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-  },
 
-  // addContacts: {
-  //   reducer(state, action) {
-  //     state.push(action.payload);
-  //   },
-  //   prepare({ name, number }) {
-  //     return {
-  //       payload: {
-  //         id: nanoid(),
-  //         name,
-  //         number,
-  //       },
-  //     };
-  //   },
-  // },
-  // deleteContacts(state, action) {
-  //   return state.filter(contact => contact.id !== action.payload);
-  // },
+    [deleteContacts.pending](state) {
+      state.isLoading = true;
+    },
+    [deleteContacts.fulfilled](state, action) {
+      state.isLoading = false;
+      state.error = null;
+      const index = state.items.findIndex(
+        contact => contact.id === action.payload.id
+      );
+      state.items.splice(index, 1);
+    },
+    [deleteContacts.rejected](state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+  },
 });
 
-// export const { fetchingInProgress, fetchingSuccess, fetchingError } =
-//   contactsSlice.actions;
 export const contactsReducer = contactsSlice.reducer;

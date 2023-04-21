@@ -10,8 +10,7 @@ export const ContactList = () => {
   const dispatch = useDispatch();
   const {items, isLoading, error } = useSelector(getContacts);
   const filter = useSelector(getFilter);
-  console.log('items', items)
-
+  
   useEffect(() => {
     dispatch(fetchContacts());
    
