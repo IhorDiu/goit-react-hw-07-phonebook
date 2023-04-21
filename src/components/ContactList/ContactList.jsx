@@ -3,28 +3,27 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchContacts } from 'redux/operations';
 import { ContactItem } from 'components/ContactItem/ContactItem';
 import {
-  getContacts,
-  getFilter,
-  getError,
-  getIsLoading,
+  selectVisibleContacts,
+  selectError,
+  selectIsLoading,
 } from 'redux/selectors';
 
 import { ListContacts } from './ContactList.styled';
 
 export const ContactList = () => {
   const dispatch = useDispatch();
-  const { items } = useSelector(getContacts);
-  const filter = useSelector(getFilter);
-  const isLoading = useSelector(getIsLoading);
-  const error = useSelector(getError);
+  // const { items } = useSelector(selectContacts);
+  const visibleContacts = useSelector(selectVisibleContacts);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
 
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  const visibleContacts = items.filter(contacts =>
-    contacts.name.toLowerCase().includes(filter.toLowerCase())
-  );
+  // const visibleContacts = items.filter(contacts =>
+  //   contacts.name.toLowerCase().includes(filter.toLowerCase())
+  // );
 
   return (
     <ListContacts>
@@ -40,3 +39,19 @@ export const ContactList = () => {
 };
 
 
+
+
+// export const selectTaskCount = createSelector([selectTasks], tasks => {
+//   console.log("Calculating task count. Now memoized!");
+//   return tasks.reduce(
+//     (count, task) => {
+//       if (task.completed) {
+//         count.completed += 1;
+//       } else {
+//         count.active += 1;
+//       }
+//       return count;
+//     },
+//     { active: 0, completed: 0 }
+//   );
+// });

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { addContacts } from 'redux/operations';
-import { getContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
 import { Formik } from 'formik';
 
 import { Input, FormInput, AddButton } from './ContactForm.styled';
@@ -8,7 +8,7 @@ import { Input, FormInput, AddButton } from './ContactForm.styled';
 const initialValues = { name: '', phone: '' };
 
 export const ContactForm = () => {
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   const handleSubmit = (values, { resetForm }) => {
