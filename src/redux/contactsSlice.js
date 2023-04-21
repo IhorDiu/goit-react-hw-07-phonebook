@@ -2,26 +2,11 @@ import {
   createSlice,
   //  nanoid
 } from '@reduxjs/toolkit';
-import { fetchContacts } from './operations';
+import { fetchContacts, addContacts } from './operations';
 
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState: { items: [], isLoading: false, error: null },
-  // reducers: {
-  //   fetchingInProgress(state) {
-  //     state.isLoading = true;
-  //   },
-
-  //   fetchingSuccess(state, action) {
-  //     state.isLoading = false;
-  //     state.error = null;
-  //     state.items = action.payload;
-  //   },
-
-  //   fetchingError(state, action) {
-  //     state.isLoading = false;
-  //     state.error = action.payload;
-  //   },
 
   extraReducers: {
     [fetchContacts.pending](state) {
@@ -33,6 +18,18 @@ const contactsSlice = createSlice({
       state.items = action.payload;
     },
     [fetchContacts.rejected](state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [addContacts.pending](state) {
+      state.isLoading = true;
+    },
+    [addContacts.fulfilled](state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.items.push(action.payload);
+    },
+    [addContacts.rejected](state, action) {
       state.isLoading = false;
       state.error = action.payload;
     },

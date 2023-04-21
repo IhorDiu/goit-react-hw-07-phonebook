@@ -24,7 +24,7 @@ export const ContactList = () => {
 
   return (
     <ListContacts>
-      {isLoading && <p>Loading tasks...</p>}
+      {isLoading && !error  && <p>Loading Contacts...</p>}
       {error && <p>{error}</p>}
       {visibleContacts.map(contact => (
         <ContactItem key={contact.id} contact={contact} />

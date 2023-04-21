@@ -1,22 +1,20 @@
-import { 
-  // useDispatch, 
-  useSelector } from 'react-redux';
-// import { addContacts } from 'redux/contactsSlice';
-import {getContacts} from 'redux/selectors'
+import { useDispatch, useSelector } from 'react-redux';
+import { addContacts } from 'redux/operations';
+import { getContacts } from 'redux/selectors';
 import { Formik } from 'formik';
 
 import { Input, FormInput, AddButton } from './ContactForm.styled';
 
-const initialValues = { name: '', number: '' };
+const initialValues = { name: '', phone: '' };
 
 export const ContactForm = () => {
   const contacts = useSelector(getContacts);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const handleSubmit = (values, { resetForm }) => {
     const newName = values.name;
     if (
-      contacts.find(
+      contacts.items.find(
         contact => contact.name.toLowerCase() === newName.toLowerCase()
       )
     ) {
@@ -25,7 +23,7 @@ export const ContactForm = () => {
       return;
     }
 
-    // dispatch(addContacts(values));
+    dispatch(addContacts(values));
 
     resetForm();
   };
@@ -44,12 +42,12 @@ export const ContactForm = () => {
             required
           />
         </label>
-        <label htmlFor="number">
-          Number
+        <label htmlFor="phone">
+          Phone
           <Input
             type="tel"
-            name="number"
-            placeholder="number"
+            name="phone"
+            placeholder="phone"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
