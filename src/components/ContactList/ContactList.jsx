@@ -1,29 +1,21 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchContacts } from 'redux/operations';
-import { ContactItem } from 'components/ContactItem/ContactItem';
-import {
-  selectVisibleContacts,
-  selectError,
-  selectIsLoading,
-} from 'redux/selectors';
 
+import { useIsLoading, useError, useVisibleContacts } from 'hooks';
+import { ContactItem } from 'components';
 import { ListContacts } from './ContactList.styled';
 
 export const ContactList = () => {
   const dispatch = useDispatch();
-  // const { items } = useSelector(selectContacts);
-  const visibleContacts = useSelector(selectVisibleContacts);
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
+
+  const visibleContacts = useVisibleContacts();
+  const isLoading = useIsLoading();
+  const error = useError();
 
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
-
-  // const visibleContacts = items.filter(contacts =>
-  //   contacts.name.toLowerCase().includes(filter.toLowerCase())
-  // );
 
   return (
     <ListContacts>
@@ -37,5 +29,3 @@ export const ContactList = () => {
     </ListContacts>
   );
 };
-
-
